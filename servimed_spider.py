@@ -16,10 +16,10 @@ class ServimedSpider(scrapy.Spider):
         password = os.getenv("PASSWORD_SERVIMED")
 
         # Captura os headers via Selenium
-        # headers = get_auth_headers(username, password)
+        headers = get_auth_headers(username, password)
         
-        with open("auth_headers.json", "r") as file:
-            headers = json.load(file)
+        # with open("auth_headers.json", "r") as file:
+        #     headers = json.load(file)
 
         # Converte cookies de string para dicionário
         cookie_str = headers.pop("cookie", "")
