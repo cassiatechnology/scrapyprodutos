@@ -1,17 +1,107 @@
 [
-{"descricao": "DIPIRONA 500MG GOTAS 20ML", "gtin": 7899095203136, "codigo": 446231, "preco_fabrica": 3.67, "estoque": 18},
-{"descricao": "DIPIRONA SODICA 500 MG 30 CP G", "gtin": 7896422507059, "codigo": 119440, "preco_fabrica": 12.02, "estoque": 6619},
-{"descricao": "DIPIRONA SODICA GOTAS 20ML", "gtin": 7896004719122, "codigo": 445134, "preco_fabrica": 3.65, "estoque": 309},
-{"descricao": "DIPIRONA SODICA GTS 10 ML G", "gtin": 7896422506229, "codigo": 108545, "preco_fabrica": 4.22, "estoque": 356},
-{"descricao": "DIPIRONA SODICA SOL OR 100 ML G", "gtin": 7896004715650, "codigo": 277738, "preco_fabrica": 6.36, "estoque": 201},
-{"descricao": "DIPIRONA 1G COM 10 COMPRIMIDOS", "gtin": 7896004783857, "codigo": 442528, "preco_fabrica": 6.84, "estoque": 0},
-{"descricao": "DIPIRONA MONOIDRATADA 1G COM 10 COMPRIMIDOS", "gtin": 7891058002602, "codigo": 444065, "preco_fabrica": 8.51, "estoque": 0},
-{"descricao": "DIPIRONA MONOIDRATADA 500MG 100 COMPRIMIDOS", "gtin": 7891058005726, "codigo": 448774, "preco_fabrica": 31.63, "estoque": 0},
-{"descricao": "DIPIRONA SODICA 500 MG 240 CP G", "gtin": 7896422507066, "codigo": 403811, "preco_fabrica": 84.59, "estoque": 0},
-{"descricao": "DIPIRONA SODICA 500 MG 30 CP G", "gtin": 7896004756622, "codigo": 417726, "preco_fabrica": 9.120000000000001, "estoque": 0},
-{"descricao": "DIPIRONA SODICA GTS 10 ML G", "gtin": 7896004719115, "codigo": 277921, "preco_fabrica": 2.23, "estoque": 0},
-{"descricao": "DIPIRONA SODICA GTS 20 ML G", "gtin": 7896422506236, "codigo": 108553, "preco_fabrica": 4.83, "estoque": 0},
-{"descricao": "DIPIRONA SODICA SOL OR 100 ML G", "gtin": 7896422506243, "codigo": 145920, "preco_fabrica": 8.17, "estoque": 0},
-{"descricao": "DIPIRONA SODICA GTS 20 ML G", "gtin": 7896181909651, "codigo": 167250, "preco_fabrica": 4.98, "estoque": 0},
-{"descricao": "DIPIRONA SODICA SOL OR 100 ML G", "gtin": 7896181911036, "codigo": 179361, "preco_fabrica": 6.69, "estoque": 0}
+{
+    "descricao": "DIPIRONA 500MG GOTAS 20ML",
+    "gtin": 7899095203136,
+    "codigo": 446231,
+    "preco_fabrica": 3.67,
+    "estoque": 18
+},
+{
+    "descricao": "DIPIRONA SODICA 500 MG 30 CP G",
+    "gtin": 7896422507059,
+    "codigo": 119440,
+    "preco_fabrica": 12.02,
+    "estoque": 6619
+},
+{
+    "descricao": "DIPIRONA SODICA GOTAS 20ML",
+    "gtin": 7896004719122,
+    "codigo": 445134,
+    "preco_fabrica": 3.65,
+    "estoque": 309
+},
+{
+    "descricao": "DIPIRONA SODICA GTS 10 ML G",
+    "gtin": 7896422506229,
+    "codigo": 108545,
+    "preco_fabrica": 4.22,
+    "estoque": 356
+},
+{
+    "descricao": "DIPIRONA SODICA SOL OR 100 ML G",
+    "gtin": 7896004715650,
+    "codigo": 277738,
+    "preco_fabrica": 6.36,
+    "estoque": 201
+},
+{
+    "descricao": "DIPIRONA 1G COM 10 COMPRIMIDOS",
+    "gtin": 7896004783857,
+    "codigo": 442528,
+    "preco_fabrica": 6.84,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA MONOIDRATADA 1G COM 10 COMPRIMIDOS",
+    "gtin": 7891058002602,
+    "codigo": 444065,
+    "preco_fabrica": 8.51,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA MONOIDRATADA 500MG 100 COMPRIMIDOS",
+    "gtin": 7891058005726,
+    "codigo": 448774,
+    "preco_fabrica": 31.63,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA 500 MG 240 CP G",
+    "gtin": 7896422507066,
+    "codigo": 403811,
+    "preco_fabrica": 84.59,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA 500 MG 30 CP G",
+    "gtin": 7896004756622,
+    "codigo": 417726,
+    "preco_fabrica": 9.120000000000001,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA GTS 10 ML G",
+    "gtin": 7896004719115,
+    "codigo": 277921,
+    "preco_fabrica": 2.23,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA GTS 20 ML G",
+    "gtin": 7896422506236,
+    "codigo": 108553,
+    "preco_fabrica": 4.83,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA SOL OR 100 ML G",
+    "gtin": 7896422506243,
+    "codigo": 145920,
+    "preco_fabrica": 8.17,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA GTS 20 ML G",
+    "gtin": 7896181909651,
+    "codigo": 167250,
+    "preco_fabrica": 4.98,
+    "estoque": 0
+},
+{
+    "descricao": "DIPIRONA SODICA SOL OR 100 ML G",
+    "gtin": 7896181911036,
+    "codigo": 179361,
+    "preco_fabrica": 6.69,
+    "estoque": 0
+}
 ]
