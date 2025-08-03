@@ -1,0 +1,14 @@
+{
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Content-Type": "application/json",
+    "contenttype": "application/json",
+    "cookie": "_gid=GA1.3.1988582023.1754168219; _gat=1; _gat_gtag_UA_149227611_1=1; _ga=GA1.1.1452426544.1754168219; sessiontoken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ29Vc3VhcmlvIjoyMjg1MCwidG9rZW4iOiI0MDQ2YjM4MC02ZmUzLTExZjAtYmNiZC1kNTUzOWQ3OTNmODIiLCJpYXQiOjE3NTQxNjgyMjcsImV4cCI6MTc1NDIxMTQyNywiYXVkIjoiaHR0cDovL3NlcnZpbWVkLmNvbS5iciIsImlzcyI6IlNlcnZpbWVkIiwic3ViIjoic2VydmltZWRAU2VydmltZWQuY29tLmJyIn0.OOuWTPwE-q0fQjN7BFnfwGHuuAG0SCFTz7Ap1vQ-LmQuqJggoWQlta-GolSWhBwbqjOnlk_iEi_sEB8B359jzQ; accesstoken=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ29Vc3VhcmlvIjoyMjg1MCwidG9rZW4iOiI0MDQ2YjM4MC02ZmUzLTExZjAtYmNiZC1kNTUzOWQ3OTNmODIiLCJpYXQiOjE3NTQxNjgyMjcsImV4cCI6MTc1NDIxMTQyNywiYXVkIjoiaHR0cDovL3NlcnZpbWVkLmNvbS5iciIsImlzcyI6IlNlcnZpbWVkIiwic3ViIjoic2VydmltZWRAU2VydmltZWQuY29tLmJyIn0.OOuWTPwE-q0fQjN7BFnfwGHuuAG0SCFTz7Ap1vQ-LmQuqJggoWQlta-GolSWhBwbqjOnlk_iEi_sEB8B359jzQ; _ga_0684EZD6WN=GS2.1.s1754168218$o1$g0$t1754168227$j51$l0$h0",
+    "loggeduser": "22850",
+    "origin": "https://pedidoeletronico.servimed.com.br",
+    "referer": "https://pedidoeletronico.servimed.com.br/",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "x-cart": "",
+    "x-peperone": ""
+}

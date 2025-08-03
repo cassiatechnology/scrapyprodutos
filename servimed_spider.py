@@ -1,25 +1,20 @@
 import scrapy
 import json
-from get_token import get_auth_headers
 from dotenv import load_dotenv
 import os
 
 
 class ServimedSpider(scrapy.Spider):
-    name = "servimed_oculto"
+    name = "servimed_produtos"
 
     def start_requests(self):
-        # Carrega as variáveis do .env
         load_dotenv()
-        
-        username = os.getenv("USERNAME_SERVIMED")
-        password = os.getenv("PASSWORD_SERVIMED")
 
-        # Captura os headers via Selenium
-        headers = get_auth_headers(username, password)
-        
-        # with open("auth_headers.json", "r") as file:
-        #     headers = json.load(file)
+        # Carrega os headers de autenticação do arquivo JSON
+        with open("auth_headers.json", "r") as file:
+            headers = json.load(file)
+
+        headers["accesstoken"] = os.getenv("ACCESS_TOKEN_SERVIMED", headers.get("accesstoken", ""))
 
         # Converte cookies de string para dicionário
         cookie_str = headers.pop("cookie", "")
