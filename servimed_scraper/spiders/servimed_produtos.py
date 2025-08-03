@@ -2,10 +2,26 @@ import scrapy
 import json
 from dotenv import load_dotenv
 import os
+import sys
+import asyncio
+import nest_asyncio
+
+
+# Adiciona o caminho do projeto ao sys.path para importar corretamente
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Importa o produtor de RabbitMQ
+from rabbitmq_cotefacil.producer import send as producer_send
+
+# Aplica o nest_asyncio para permitir múltiplos loops de eventos
+nest_asyncio.apply()
 
 
 class ServimedProdutosSpider(scrapy.Spider):
     name = "servimed_produtos"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.produtos_coletados = []
 
     # Garantindo compatibilidade com o Scrapy anterior a 2.13
     def start_requests(self):
@@ -67,10 +83,24 @@ class ServimedProdutosSpider(scrapy.Spider):
             return
 
         for item in data.get("lista", []):
-            yield {
+            produto = {
                 "descricao": item.get("descricao"),
                 "gtin": item.get("codigoBarras"),
                 "codigo": item.get("codigoExterno"),
                 "preco_fabrica": item.get("valorComDesconto"),
                 "estoque": item.get("quantidadeEstoque")
                 }
+            
+            self.produtos_coletados.append(produto)
+            yield produto
+            
+    def close(self, reason):
+        if self.produtos_coletados:
+            self.logger.info(f"Total de produtos coletados: {len(self.produtos_coletados)}")
+            import nest_asyncio
+            nest_asyncio.apply()
+            loop = asyncio.get_event_loop()
+            self.logger.info("Iniciando envio de produtos para RabbitMQ...")
+            loop.run_until_complete(producer_send(self.produtos_coletados, self.logger))
+        else:
+            self.logger.warning("Nenhum produto foi coletado.")
