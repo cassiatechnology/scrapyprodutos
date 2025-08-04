@@ -4,6 +4,9 @@ import aioamqp
 async def callback_consumer(channel, body, envelope, properties):
     print(f"Recebido produto: {body.decode('utf-8')}")
 
+    for index, produto in enumerate(body.decode('utf-8').split(',')):
+        print(f"Processando produto {index}: {produto}")
+
 async def receiver():
     transport, protocol = await aioamqp.connect()
     channel = await protocol.channel()
