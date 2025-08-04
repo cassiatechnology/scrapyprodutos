@@ -1,6 +1,6 @@
 import jwt
 
-def extract_tokens_from_cookies(set_cookie_list):
+def extraia_access_token_dos_cookies(set_cookie_list):
     cookie_dict = {}
     for raw_cookie in set_cookie_list:
         parts = raw_cookie.decode().split(";")

@@ -1,4 +1,4 @@
-def build_product_payload(login_data, filtro=""):
+def obtenha_body_carrinho(login_data, filtro=""):
     return {
         "filtro": filtro,
         "pagina": 1,

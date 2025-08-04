@@ -1,19 +1,20 @@
-# servimed_produtos.py
 import scrapy
 import json
 
-from servimed_scraper.utils.auth import extract_tokens_from_cookies, decode_jwt_token
-from servimed_scraper.utils.payload import build_product_payload
+from servimed_scraper.utils.auth_accesstoken import extraia_access_token_dos_cookies, decode_jwt_token
+from servimed_scraper.utils.payload_carrinho import obtenha_body_carrinho
+from servimed_scraper.callback.api_cotefacil import cadastre_produto
 
 
 class ServimedProdutosSpider(scrapy.Spider):
     name = "servimed_produtos"
 
-    def __init__(self, usuario=None, senha=None, filtro="", *args, **kwargs):
+    def __init__(self, usuario=None, senha=None, filtro="", callback_url="https://desafio.cotefacil.net", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.usuario = usuario
         self.senha = senha
         self.filtro = filtro
+        self.callback_url = callback_url
         self.produtos_coletados = []
 
     def start_requests(self):
@@ -52,7 +53,7 @@ class ServimedProdutosSpider(scrapy.Spider):
             self.logger.info(f"Resposta completa: {response.text}")
             return
 
-        cookie_dict = extract_tokens_from_cookies(response.headers.getlist("Set-Cookie"))
+        cookie_dict = extraia_access_token_dos_cookies(response.headers.getlist("Set-Cookie"))
         raw_token = cookie_dict.get("accesstoken")
         session_token = cookie_dict.get("sessiontoken")
 
@@ -64,7 +65,7 @@ class ServimedProdutosSpider(scrapy.Spider):
         if not access_token:
             return
 
-        self.logger.info(f"Token UUID extraído: {access_token}")
+        self.logger.info(f"Accesstoken extraído e decodificado com sucesso")
 
         headers = {
             "Content-Type": "application/json",
@@ -76,7 +77,11 @@ class ServimedProdutosSpider(scrapy.Spider):
             "user-agent": "Mozilla/5.0"
         }
 
-        body = build_product_payload(login_data=login_data, filtro=self.filtro)
+        self.logger.info("-" * 30)
+        self.logger.info(f"Filtro: {self.filtro}")
+        self.logger.info("-" * 30)
+
+        body = obtenha_body_carrinho(login_data=login_data, filtro=self.filtro)
         url = "https://peapi.servimed.com.br/api/carrinho/oculto?siteVersion=4.0.27"
 
         yield scrapy.Request(
@@ -97,9 +102,9 @@ class ServimedProdutosSpider(scrapy.Spider):
 
         for item in data.get("lista", []):
             produto = {
-                "descricao": item.get("descricao"),
-                "gtin": item.get("codigoBarras"),
-                "codigo": item.get("codigoExterno"),
+                "descricao": str(item.get("descricao")),
+                "gtin": str(item.get("codigoBarras")),
+                "codigo": str(item.get("codigoExterno")),
                 "preco_fabrica": item.get("valorComDesconto"),
                 "estoque": item.get("quantidadeEstoque")
             }
@@ -109,5 +114,13 @@ class ServimedProdutosSpider(scrapy.Spider):
     def close(self, reason):
         if self.produtos_coletados:
             self.logger.info(f"Total de produtos coletados: {len(self.produtos_coletados)}")
+
+            self.logger.info("-" * 50)
+            self.logger.info(f"Produtos coletados: \n{self.produtos_coletados}")
+            self.logger.info("-" * 50)
+
+            self.logger.info("Enviando callback para API da Cotefácil...")
+            if self.callback_url:
+                cadastre_produto(self.callback_url, self.produtos_coletados, self.logger)
         else:
             self.logger.warning("Nenhum produto foi coletado.")
