@@ -1,0 +1,25 @@
+def build_product_payload(login_data, filtro=""):
+    return {
+        "filtro": filtro,
+        "pagina": 1,
+        "registrosPorPagina": 25,
+        "ordenarDecrescente": False,
+        "colunaOrdenacao": "nenhuma",
+        "clienteId": 267511,
+        "tipoVendaId": 1,
+        "fabricanteIdFiltro": 0,
+        "pIIdFiltro": 0,
+        "cestaPPFiltro": False,
+        "codigoExterno": 0,
+        "codigoUsuario": login_data["usuario"]["codigoUsuario"],
+        "promocaoSelecionada": "",
+        "indicadorTipoUsuario": login_data["usuario"]["indicadorTipoUsuario"],
+        "kindUser": 0,
+        "xlsx": [],
+        "principioAtivo": "",
+        "master": False,
+        "kindSeller": login_data["usuario"].get("kindSeller", 0),
+        "grupoEconomico": login_data["usuario"].get("grupoEconomico", ""),
+        "users": login_data["usuario"]["users"],
+        "list": True
+    }
