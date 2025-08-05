@@ -23,7 +23,7 @@ def obtenha_lista_de_produtos_scrapy(ch, method, properties, body):
     usuario = dados["usuario"]
     senha = dados["senha"]
     callback_url = dados["callback_url"]
-    filtro = ""  # Nome do produto que deseja consultar
+    filtro = "277738"  # Nome do produto que deseja consultar
 
     # Caminho absoluto para a raiz do projeto
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
