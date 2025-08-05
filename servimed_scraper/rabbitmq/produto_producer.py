@@ -1,14 +1,16 @@
 import pika
 import json
 import os
-from dotenv import load_dotenv
 
-load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
+
+with open("parametros.json", "r", encoding="utf-8") as f:
+    parametros = json.load(f)
 
 mensagem = {
-    "usuario": os.getenv("USUARIO_SERVIMED", ""),
-    "senha": os.getenv("SENHA_SERVIMED", ""),
-    "callback_url": "https://desafio.cotefacil.net"
+    "usuario": parametros["usuario"],
+    "senha": parametros["senha"],
+    "callback_url": parametros["callback_url"],
+    "filtro": parametros["filtro"],  # Nome ou código do produto que deseja consultar
 }
 
 conexao = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
