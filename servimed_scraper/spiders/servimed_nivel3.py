@@ -7,37 +7,36 @@ from servimed_scraper.utils.rabbitmq_utils import enviar_para_fila
 class ServimedNivel3Spider(scrapy.Spider):
     name = "servimed_nivel3"
 
-    def __init__(self, *args, **kwargs):
+    custom_settings = {
+        'FEEDS': {
+            "produtos_nivel3.json": {  # FEED_URI
+            "format": "json",   # FEED_FORMAT
+            "overwrite": True,
+            "encoding": "utf8",  # FEED_EXPORT_ENCODING
+            "indent": 4
+            }
+        }
+    }
+
+    def __init__(self, input_json="parametros.json", *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # REMOVER ESSA PARTE DEPOIS DE TESTAR --------------------------
-        from dotenv import load_dotenv
-        import os
-        load_dotenv()  # Carrega variáveis de ambiente do arquivo .env
+        with open(input_json, "r", encoding="utf-8") as f:
+            self.data = json.load(f)
 
-        usuario = os.getenv("USUARIO_SERVIMED", "")
-        senha = os.getenv("SENHA_SERVIMED", "")
-        callback_url = "https://desafio.cotefacil.net"
-        filtro = "277738"  # Nome do produto que deseja consultar
-
-        self.usuario = usuario
-        self.senha = senha
-        self.filtro = filtro
-        self.callback_url = callback_url
         self.produtos_coletados = []
         self.access_token = None
         self.sessiontoken = None
         self.cookie = None
         self.login_data = {}
-        self.quantidade = 1  # Quantidade de produtos a serem comprados
         self.produto_encontrado = {}
         # ---------------------------------------------------------------
 
     def start_requests(self):
         url = "https://peapi.servimed.com.br/api/usuario/login"
         payload = {
-            "usuario": self.usuario,
-            "senha": self.senha
+            "usuario": self.data["usuario"],
+            "senha": self.data["senha"]
         }
 
         headers = {
@@ -53,7 +52,6 @@ class ServimedNivel3Spider(scrapy.Spider):
         self.logger.info(f"[LOGIN] URL: {url}")
 
         self.logger.info(f"[LOGIN] Payload: {payload}")
-        self.logger.info(f"[LOGIN] Headers: {headers}")
         self.logger.info("*" * 50)
 
         yield scrapy.Request(
@@ -71,9 +69,7 @@ class ServimedNivel3Spider(scrapy.Spider):
             self.logger.info("*" * 50)
             self.logger.info(f"[LOGIN] self.login_data: {self.login_data}")
 
-
             self.logger.info("*" * 50)
-            self.logger.info("[LOGIN] Verificando resposta do login...")
             self.logger.info(f"[LOGIN] Status: {response.status}")
             self.logger.info("*" * 50)
 
@@ -104,12 +100,6 @@ class ServimedNivel3Spider(scrapy.Spider):
         self.access_token = access_token
         self.sessiontoken = session_token
 
-        self.logger.info("*" * 50)
-        # Montar cookie no formato "chave=valor; chave=valor; ..."
-        cookie_str = "; ".join([f"{k}={v}" for k, v in cookie_dict.items()])
-        self.logger.info(f"[LOGIN] COOOOOOOOOOOOOOOOOOOKIIIIIIIIIIIIIIIIIII: ({cookie_str.strip()})")
-        self.logger.info("*" * 50)
-
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -121,10 +111,11 @@ class ServimedNivel3Spider(scrapy.Spider):
         }
 
         self.logger.info("-" * 30)
-        self.logger.info(f"Filtro: {self.filtro}")
+        filtro = self.data["filtro"]
+        self.logger.info(f"Filtro: {filtro}")
         self.logger.info("-" * 30)
 
-        body = obtenha_body_carrinho(login_data=login_data, filtro=self.filtro)
+        body = obtenha_body_carrinho(login_data=login_data, filtro=self.data["filtro"])
         url = "https://peapi.servimed.com.br/api/carrinho/oculto?siteVersion=4.0.27"
 
         self.logger.info("[CARRINHO] Obtendo Produtos...")
@@ -156,10 +147,7 @@ class ServimedNivel3Spider(scrapy.Spider):
         self.produto_encontrado = lista[0]
 
         self.logger.info("[PEDIDO] Transmitindo pedido...")
-        self.logger.info("*" * 100)
-        self.logger.info(f"Preenchendo access token ({self.access_token})\n session token ({self.sessiontoken})\ncookie ({self.cookie})")
 
-        self.logger.info("*" * 100)
         url = "https://peapi.servimed.com.br/api/Pedido/TrasmitirPedido"
         headers = {
             "Content-Type": "application/json",
@@ -179,7 +167,7 @@ class ServimedNivel3Spider(scrapy.Spider):
                 "id": self.produto_encontrado["codigoExterno"],
                 "selectedPromotionID": -1,
                 "taxValue": 0,
-                "quantityRequested": self.quantidade,
+                "quantityRequested": self.data["quantidade"],
                 "baseValue": 0,
                 "totalStIvaValue": 0,
                 "totalValue": 0,
@@ -235,8 +223,8 @@ class ServimedNivel3Spider(scrapy.Spider):
         )
 
     def after_ultimo_pedido(self, response):
-        self.logger.info("*" * 100)
-        self.logger.info(f"[PEDIDO] PEDIDOS encontrados: {response.text}")
+        self.logger.info("*" * 50)
+        self.logger.info(f"[PEDIDO] Status Pedidos: {response.status}")
 
         lista = response.json().get("lista", [])
         if not lista:
@@ -246,18 +234,20 @@ class ServimedNivel3Spider(scrapy.Spider):
         id_pedido = lista[0]["id"]
 
         self.logger.info(f"[PEDIDO] ID do último pedido: {id_pedido}")
-        self.logger.info("*" * 100)
+        self.logger.info("*" * 50)
 
         mensagem = {
-            "usuario": self.usuario,
-            "senha": self.senha,
+            "usuario": self.data["usuario"],
+            "senha": self.data["senha"],
             "id_pedido": str(id_pedido),
             "produtos": [{
                 "gtin": str(self.produto_encontrado["codigoBarras"]),
                 "codigo": str(self.produto_encontrado["codigoExterno"]),
-                "quantidade": self.quantidade
+                "quantidade": self.data["quantidade"]
             }],
-            "callback_url": self.callback_url
+            "callback_url": self.data["callback_url"]
         }
         enviar_para_fila("orders_queue_nivel3", mensagem)
+        self.logger.info("*" * 50)
         self.logger.info(f"[FILA] Pedido {id_pedido} enviado para fila.")
+        self.logger.info("*" * 50)

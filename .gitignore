@@ -81,7 +81,8 @@ target/
 # IPython
 profile_default/
 ipython_config.py
-nivel3_input.json
+parametros.json
+produtos_nivel3.json
 
 # Ignorar arquivos compilados Python
 __pycache__/

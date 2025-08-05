@@ -9,6 +9,17 @@ from servimed_scraper.callback.api_cotefacil import cadastre_produto
 class ServimedProdutosSpider(scrapy.Spider):
     name = "servimed_produtos"
 
+    custom_settings = {
+        'FEEDS': {
+            "produtos.json": {  # FEED_URI
+            "format": "json",   # FEED_FORMAT
+            "overwrite": True,
+            "encoding": "utf8",  # FEED_EXPORT_ENCODING
+            "indent": 4
+            }
+        }
+    }
+
     def __init__(self, usuario=None, senha=None, filtro="", callback_url="https://desafio.cotefacil.net", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.usuario = usuario
