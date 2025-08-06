@@ -167,7 +167,7 @@ Este script:
 
 ### 4. Fazer PATCH para /pedido/:id com os dados extraídos
 
-Não foi possível executar essa etapa, pois o endpoint da API está com problemas:
+Não foi possível executar essa etapa, pois o endpoint da API de cadastro de Pedido está com problemas:
 
 ```powershell
 curl -X 'POST' \
@@ -184,6 +184,8 @@ curl -X 'POST' \
   "message": "Unhandled server error"
 }
 ```
+![ERRO POST Pedido - API Cotefacil](imagens/erroPostPedidoCotefacil.png)
+
 
 ---
 
@@ -218,10 +220,10 @@ servimed_scraper/
 
 ### Cadastro de Produtos na API da Cotefacil:
 
-imagens/produtos.png
+![GET Produtos - API Cotefacil](imagens/produtos.png)
 
 ---
 
 ### Cadastro de Pedidos na API da Servimed:
 
-imagens/pedido.png
+![GET Pedidos - API Servimed](imagens/pedido.png)
